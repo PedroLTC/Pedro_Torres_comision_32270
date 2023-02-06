@@ -1,7 +1,8 @@
 const { Router } = require('express')
-const ProductManager = require('./productManager')
+const ProductManager = require('../Daos/productManager')
 
-const path = ('./data.json')
+
+const path = (`./src/mockDB/data.json`)
 
 
 const pm = new ProductManager(path)

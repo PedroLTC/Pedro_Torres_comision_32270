@@ -1,5 +1,5 @@
 const express = require('express')
-const productsRouter = require('./products.router')
+const productsRouter = require('./routes/products.router.js')
 const cartsRouter = require('./routes/carts.router.js')
 
 const app = express()
