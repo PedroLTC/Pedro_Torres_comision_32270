@@ -1,0 +1,26 @@
+<div>
+    <h1>Productos en Tiempo Real</h1>
+    {{#if isAdmin}}
+        {{!-- {{#each products}}
+                <div>
+                        <p> Id: {{this.id}}</p> 
+                        <p> Title: {{this.title}}</p> 
+                        <p>Description: {{this.description}}</p> 
+                        <p>Price: {{this.price}}</p> 
+                        <p>Code: {{this.code}}</p> 
+                        <p>Stock:{{this.stock}}</p> 
+                        <p>Image: {{this.thumbnail}}</p> 
+                </div>
+        {{/each}} --}}
+
+        <div>
+            <p id="productsLog"></p>
+        </div>
+
+
+    {{else}}
+        <p>No tienes permisos para ver la lista de productos</p>
+    {{/if}}
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/virtual/js/realtimeproducts.js"></script>

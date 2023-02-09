@@ -93,6 +93,7 @@ router.post('/', async (req, res) => {
     try {
         const newProduct = req.body
         const resultProduct = await addProductToModule(newProduct)
+        //io.emit('newProduct', newProduct)
         res.status(resultProduct.status).send(resultProduct.report)
     } catch (error) {
         console.error(error)

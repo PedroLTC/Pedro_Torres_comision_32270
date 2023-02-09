@@ -3,6 +3,7 @@ const productsRouter = require('./routes/products.router.js')
 const cartsRouter = require('./routes/carts.router.js')
 const viewsRouter = require('./routes/views.router.js')
 const handlebars = require('express-handlebars')
+const { Server, Socket } = require('socket.io')
 
 const app = express()
 const PORT = 8080
@@ -21,7 +22,25 @@ app.use('/api/carts', cartsRouter)
 app.use('/', viewsRouter)
 
 
-app.listen(PORT, err => {
+const httpServer = app.listen(PORT, err => {
     if (err) console.log(err)
-    console.log(`Server up listening on port ${PORT}`)
+    console.log(`Server up listening on port ${httpServer.address().port}`)
 }) 
+
+
+const io = new Server(httpServer)
+
+let newProduct = {
+
+    title: 'Teclado',
+    precio: 100,
+    codigo: 'ABCD'
+
+}
+
+io.on('connection', socket => {
+    console.log('Nuevo cliente conectado') 
+
+    socket.emit('newProduct', newProduct)    
+    
+})

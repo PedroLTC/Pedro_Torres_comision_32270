@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
         const products = await getProductsFromModule()
         res.status(200).render('home', {
             user: testUser,
-            style: 'index.css',
+            style: 'home.css',
             isAdmin: testUser.role === `admin`,
             products
         })
@@ -33,10 +33,22 @@ router.get('/', async (req, res) => {
         console.error(error)
         res.status(500).send(`Error al obtener los productos`)
     }
+})
 
-
-
-   
+router.get('/realtimeproducts', async (req, res) => {
+    try {
+        let testUser = { name: `Pedro`, last_name: `Torres`, role: `admin` }
+        const products = await getProductsFromModule()
+        res.status(200).render('realTimeProducts', {
+            user: testUser,
+            style: 'realtimeproducts.css',
+            isAdmin: testUser.role === `admin`,
+            products
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).send(`Error al obtener los productos`)
+    }
 })
 
 module.exports = router

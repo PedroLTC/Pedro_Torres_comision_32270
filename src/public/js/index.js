@@ -1,1 +1,0 @@
-console.log(`Ejecutando Script desde la plantilla`)
