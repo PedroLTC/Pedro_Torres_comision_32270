@@ -10,7 +10,7 @@ const PORT = 8080
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use('/virtual' ,express.static(__dirname+'/public'))
+app.use('/virtual', express.static(__dirname + '/public'))
 
 app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname + '/views')
@@ -25,22 +25,28 @@ app.use('/', viewsRouter)
 const httpServer = app.listen(PORT, err => {
     if (err) console.log(err)
     console.log(`Server up listening on port ${httpServer.address().port}`)
-}) 
+})
 
 
 const io = new Server(httpServer)
 
-let newProduct = {
-
-    title: 'Teclado',
-    precio: 100,
-    codigo: 'ABCD'
-
-}
+let productos = [
+    // {
+    //     title: 'pendrive',
+    //     description: '500 Gb',
+    //     price: '120',
+    //     stock: '250',
+    //     thumbnail: ''
+    // }
+]
 
 io.on('connection', socket => {
-    console.log('Nuevo cliente conectado') 
+    console.log('Nuevo cliente conectado')
 
-    socket.emit('newProduct', newProduct)    
-    
+    socket.on('newProduct', data => {
+        productos.push(data)
+
+        io.emit(`productsLogs`, productos)
+    })
+
 })
