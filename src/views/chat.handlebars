@@ -1,0 +1,55 @@
+<div>
+    <h1>{{ user.name }}, ¡Welcome to support chat!</h1>
+    <h2>Socket Io</h2>
+    <hr>
+     
+    <div>
+        <input type="text" name="chatbox" id="chatbox">
+    </div>
+    <div>
+        <ul id="messageLogs"></ul>
+    </div>
+
+    
+    <hr>
+    {{#if isAdmin}}
+        {{#each fakeApi}}
+            <div>
+                <p>Nombre del producto: {{this.name}}</p>
+                <p>Precio: {{this.price}}</p>
+                {{!-- <p>{{}}</p> --}}
+            </div>
+        {{/each}}
+    {{else}}
+        <h2>Unauthorized User</h2>
+    {{/if}}
+</div>
+<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js "></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/virtual/js/chat.js"></script>
+
+
+
+
+
+{{!-- <div>
+    <h1>Productos en Tiempo Real</h1>
+    {{#if isAdmin}}
+    {{#each products}}
+    <div>
+        <p> Id: {{this.id}} || Title: {{this.title}} || Description: {{this.description}} || Price: {{this.price}} ||
+            Code: {{this.code}} || Stock:{{this.stock}} || Image: {{this.thumbnail}}</p>
+    </div>
+    {{/each}}
+
+    <div>
+        <p id="productsLog"></p>
+    </div>
+
+
+    {{else}}
+    <p>No tienes permisos para ver la lista de productos</p>
+    {{/if}}
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/virtual/js/chat.js"></script> --}}
