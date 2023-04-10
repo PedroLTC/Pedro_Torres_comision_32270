@@ -126,6 +126,68 @@ class ProductManagerMongo {
         }
     }
 
+    advancedSearch = async (parametersSearch) => {
+        try {
+
+            if (parametersSearch.query === '') {
+                const { docs, totalPages, prevPage, nextPage, page, hasPrevPage, hasNextPage, prevLink, nextLink } = await ProductsModel.paginate({}, { limit: parametersSearch.limit, page: parametersSearch.page, sort: { price: parametersSearch.sort }, lean: true })
+
+                if (docs) {
+                    let resultSearch = {
+                        status: 'success',
+                        payload: docs,
+                        totalPages,
+                        prevPage,
+                        nextPage,
+                        page,
+                        hasPrevPage,
+                        hasNextPage,
+                        prevLink,
+                        nextLink
+                    }
+                    return resultSearch
+                }
+
+                if (!docs) {
+                    let resultSearch = {
+                        status: 'error'
+                    }
+                    return resultSearch
+                }
+
+            }
+
+            const { docs, totalPages, prevPage, nextPage, page, hasPrevPage, hasNextPage, prevLink, nextLink } = await ProductsModel.paginate({ category: parametersSearch.query }, { limit: parametersSearch.limit, page: parametersSearch.page, sort: { price: parametersSearch.sort }, lean: true })
+
+            if (docs) {
+                let resultSearch = {
+                    status: 'success',
+                    payload: docs,
+                    totalPages,
+                    prevPage,
+                    nextPage,
+                    page,
+                    hasPrevPage,
+                    hasNextPage,
+                    prevLink,
+                    nextLink
+                }
+                return resultSearch
+            }
+
+            if (!docs) {
+                let resultSearch = {
+                    status: 'error'
+                }
+                return resultSearch
+            }
+
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
 }
 
 module.exports = ProductManagerMongo

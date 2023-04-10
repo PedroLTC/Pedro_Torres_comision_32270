@@ -1,0 +1,13 @@
+<div>
+    {{#each products}}
+        <p><strong>Title: </strong>{{this.title}} - <strong>Description: </strong>{{this.description}} - <strong>Price: </strong>{{this.price}}</p>
+    {{/each}}
+    {{#if hasPrevPage}}
+        <a href="/api/products?page={{prevPage}}"><button>Previous</button></a>
+    {{/if}}
+    <label>{{page}}</label>
+    {{#if hasNextPage}}
+        <a href="/api/products?page={{nextPage}}"><button>Next</button></a>
+    {{/if}}
+
+</div>
