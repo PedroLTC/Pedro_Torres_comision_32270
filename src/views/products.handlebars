@@ -1,13 +1,28 @@
 <div>
     {{#each products}}
-        <p><strong>Title: </strong>{{this.title}} - <strong>Description: </strong>{{this.description}} - <strong>Price: </strong>{{this.price}}</p>
-    {{/each}}
+    <div style="border-style: groove">
+        <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.title}}">
+        <div>
+            <h2>{{this.title}}</h2>
+            <p>{{this.description}}</p>
+            <p>{{this.price}} USD</p>
+            <a href=""><button>Agregar al carrito</button></a>
+        </div>
+        {{!-- <p><strong>Title: </strong>{{this.title}} - <strong>Description: </strong>{{this.description}} - <strong>Price:
+            </strong>{{this.price}}</p> --}}
+    </div>
+
+    <div>
+        {{/each}}
     {{#if hasPrevPage}}
-        <a href="/api/products?page={{prevPage}}"><button>Previous</button></a>
+    <a href="/products?page={{prevPage}}"><button>Previous</button></a>
     {{/if}}
     <label>{{page}}</label>
     {{#if hasNextPage}}
-        <a href="/api/products?page={{nextPage}}"><button>Next</button></a>
+    <a href="/products?page={{nextPage}}"><button>Next</button></a>
     {{/if}}
+
+    </div>
+    
 
 </div>

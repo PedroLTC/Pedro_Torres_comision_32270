@@ -93,23 +93,11 @@ router.get('/', async (req, res) => {
 
         const resultOfSearch = await advancedSearchProducts(parametersSearch)
 
-        if (resultOfSearch) {
+        if (!resultOfSearch) return res.send(404).send(`Products not found`)
 
-            // res.status(200).render('products', {
-            //     products: resultOfSearch.payload,
-            //     hasPrevPage: resultOfSearch.hasPrevPage,
-            //     hasNextPage: resultOfSearch.hasNextPage,
-            //     prevPage: resultOfSearch.prevPage,
-            //     nextPage: resultOfSearch.nextPage,
-            //     page: resultOfSearch.page
-            // })
-
-            res.status(200).send(resultOfSearch)
-
-        }
+        res.status(200).send(resultOfSearch)
 
     } catch (error) {
-        console.error(error)
         res.status(500).send(`Error`)
     }
 })
@@ -141,7 +129,7 @@ router.get('/', async (req, res) => {
     //     }
     // })
     /
-    router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
         try {
             const newProduct = req.body
             const resultProduct = await addProductToModule(newProduct)
@@ -149,9 +137,9 @@ router.get('/', async (req, res) => {
             res.status(resultProduct.status).send(resultProduct.report)
         } catch (error) {
             console.error(error)
-            res.status(500).send(`Error al intentar crear el producto`)
+            res.status(500).send(`Product not created`)
         }
-    })
+})    
 
 
 router.put('/:pid', async (req, res) => {
@@ -164,7 +152,7 @@ router.put('/:pid', async (req, res) => {
         return res.status(productUpdate.status).send(productUpdate.report)
     } catch (error) {
         console.error(error)
-        res.status(500).send(`Error al intentar actualizar el producto`)
+        res.status(500).send(`Product not updated`)
     }
 })
 
@@ -179,7 +167,7 @@ router.delete('/:pid', async (req, res) => {
         return res.status(productDelete.status).send(productDelete.report)
     } catch (error) {
         console.error(error)
-        res.status(500).send(`Error al intententar borrar el producto`)
+        res.status(500).send(`Product not deleted`)
     }
 })
 

@@ -1,24 +1,26 @@
 const { Router } = require('express')
 const ProductManager = require('../Daos/productManager')
 const ProductManagerMongo = require('../Daos/productManagerMongo')
-
-//const ProductsModel = require('../models/products.model.js')
+const CartManagerMongo = require(`../Daos/cartsManagerMongo.js`)
+const ProductsModel = require('../models/products.model.js')
 
 //const path = (`./src/mockDB/data.json`)
 
 //const pm = new ProductManager(path)
 const pmDB = new ProductManagerMongo()
+const cmDB = new CartManagerMongo()
 const router = Router()
 
 
 
-const getProductsFromModule = async () => {
+
+const getCartFromModuleById = async cid => {
     try {
-        //const products = await pm.getProducts()
-        const products = await pmDB.getProducts()
-        return products
+        // const cartById = await cm.getCartById(cid)
+        const cartById = await cmDB.getCartById(cid)
+        return cartById
     } catch (err) {
-        return console.error(`lo está rompiendo este #2 ${err}`)
+        return console.error(`Id not found`)
     }
 }
 
@@ -79,5 +81,48 @@ router.get('/realtimeproducts', async (req, res) => {
         res.status(500).send(`Error al obtener los productos`)
     }
 })
+
+router.get('/cart/:cid', async (req, res) => {
+    try {
+        const { cid } = req.params
+        const cartById = await getCartFromModuleById(cid)
+
+        if (!cartById) {
+            return res.status(404).send({ message: 'Cart ID not found' })
+        }
+
+
+        res.status(200).render('cart', {
+            style: 'cart.css',
+            products: cartById.report.cart[0].products,
+            style: 'cart.css'
+        })
+
+    } catch (error) {
+        res.send(500).send(`Error getting the cart`)
+    }
+})
+
+
+router.get('/products', async (req, res) =>{
+    try {
+        const { page = 1 } = req.query
+        const {  docs, hasPrevPage, hasNextPage, prevPage, nextPage } = await ProductsModel.paginate({ },{limit: 5, page, lean: true})
+      
+        res.status(200).render('products', {
+            products: docs,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage,
+            page
+        })
+    } catch (error) {
+        // console.log(error) 
+        res.status(500).send(`Error getting products`)
+    }
+})
+
+
 
 module.exports = router
